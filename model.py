@@ -50,3 +50,31 @@ df['processed_comment'] = df['comment'].apply(preprocess_text)
 print("\n")
 print("Data after preprocessing:")
 print(df[['comment', 'processed_comment']].head(5))
+
+#Step 3: vectorize words
+#train Word2Vec model
+
+#smaller sample
+df_sample = df.sample(n=25000, random_state=42)
+model = Word2Vec(sentences=df_sample['processed_comment'], vector_size = 100, window = 5, min_count = 1, workers = 4)
+
+print("\n Model Trained")
+
+#test
+print("Vector for word 'university':")
+print(model.wv['university'])
+
+#creating comment vectors: average the vectors of all the words in the comment 
+def comment_to_vector(comment, model):
+    #list of word vectors
+    vectors = [model.wv[word] for word in comment if word in model.wv.key_to_index]
+    if not vectors:
+        return np.zeros(model.vector_size)
+
+    return np.mean(vectors, axis=0)
+
+#creating comment vectors
+df_sample['comment_vector'] = df_sample['processed_comment'].apply(lambda x: comment_to_vector(x, model))
+
+print("\nComment Vectors:")
+print(df_sample[['comment', 'comment_vector']].head(5))
