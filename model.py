@@ -78,3 +78,21 @@ df_sample['comment_vector'] = df_sample['processed_comment'].apply(lambda x: com
 
 print("\nComment Vectors:")
 print(df_sample[['comment', 'comment_vector']].head(5))
+
+#Step 4: Building and Training the Classifier
+
+#sklearn data prep
+x = np.stack(df_sample['comment_vector'].values)
+y = df_sample['label'].values
+
+#test/train split
+#80% train, 20% test
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+
+print("\nData Split Complete")
+print(f"\n Training samples: {x_train.shape[0]}, Test samples: {x_test.shape[0]}")
+
+#train logistic regression model
+clf = LogisticRegression(max_iter = 1000)
+clf.fit(x_train, y_train)
+print("\nClassifier Training Complete")
