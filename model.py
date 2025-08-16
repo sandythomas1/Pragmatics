@@ -96,3 +96,14 @@ print(f"\n Training samples: {x_train.shape[0]}, Test samples: {x_test.shape[0]}
 clf = LogisticRegression(max_iter = 1000)
 clf.fit(x_train, y_train)
 print("\nClassifier Training Complete")
+
+# Step 5: Evaluating the Classifier
+
+# Make predictions
+y_pred = clf.predict(x_test)
+
+# Calculate accuracy
+accuracy = accuracy_score(y_test, y_pred)
+
+print("\nBaseline Model Results")
+print(f"\nTest Accuracy: {accuracy:.4f}")
