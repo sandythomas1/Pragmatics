@@ -1,3 +1,5 @@
+#Beginning of baseline model
+
 #step 1: setting up my enviroment 
 
 # Import libraries
@@ -107,3 +109,22 @@ accuracy = accuracy_score(y_test, y_pred)
 
 print("\nBaseline Model Results")
 print(f"\nTest Accuracy: {accuracy:.4f}")
+
+#End of baseline model
+
+
+'''
+Iterative Research Plan
+
+Goal: See which features improve the baseline model
+
+'''
+
+#model 2: Baseline comment + parent comment
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+
