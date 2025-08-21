@@ -128,3 +128,15 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
+#preprocess parrent comments
+df.dropna(subset=['parent_comment'], inplace=True)
+df['processed_parent_comment'] = df['parent_comment'].apply(preprocess_text)
+
+#create vectors
+df['comment_vector'] = df['processed_comment'].apply(lambda x: comment_to_vector(x, model))
+df['parent_comment_vector'] = df['processed_parent_comment'].apply(lambda x: comment_to_vector(x, model))
+
+#combine vectors
+df['combined_vector'] = [np.concatenate((c_vec, p_vec)) for c_vec, p_vec in zip(df['comment_vector'], df['parent_comment_vector'])]
+
+#train and 
